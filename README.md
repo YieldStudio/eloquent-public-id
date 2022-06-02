@@ -1,6 +1,6 @@
 # eloquent-public-id
 
-Eloquent Public ID Trait for Laravel 8 and above.
+Eloquent Public ID Trait for Laravel 9 and above.
 
 [![Latest Version](https://img.shields.io/github/release/yieldstudio/eloquent-public-id?style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yieldstudio/eloquent-public-id/tests?style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/actions/workflows/tests.yml)
