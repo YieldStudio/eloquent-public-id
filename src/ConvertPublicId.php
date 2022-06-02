@@ -24,32 +24,32 @@ trait ConvertPublicId
     /**
      * @throws NotFoundModel
      */
-    private function resolvePublicId(string $mappingValue, $key, $value, array $data)
+    private function resolvePublicId(array $data, string $mapping, string $key, $value)
     {
         // If the Model isn't found, try to use as a key to get Morph relationship type
-        if (! class_exists($mappingValue)) {
-            $mappingValue = Arr::get($data, $mappingValue);
+        if (! class_exists($mapping)) {
+            $mapping = Arr::get($data, $mapping);
         }
 
         // If the Morph relationship type not matching with a class name, check in Morph map
-        if (! class_exists($mappingValue)) {
-            $mappingValue = Relation::getMorphedModel($mappingValue);
+        if (! class_exists($mapping)) {
+            $mapping = Relation::getMorphedModel($mapping);
         }
 
-        if (! class_exists($mappingValue)) {
-            throw new NotFoundModel($key, $mappingValue);
+        if (! class_exists($mapping)) {
+            throw new NotFoundModel($key, $mapping);
         }
 
-        return $mappingValue::findByPublicId($value, ['id']);
+        return $mapping::findByPublicId($value, ['id']);
     }
 
     /**
      * @throws NotFoundModel
      */
-    private function convertPublicId(array $data, $mapping): array
+    private function convertPublicId(array $data, $attributesMapping): array
     {
-        $mapping = $this->undot($mapping);
-        foreach ($mapping as $key => $modelClass) {
+        $attributesMapping = $this->expand($attributesMapping);
+        foreach ($attributesMapping as $key => $mapping) {
             // Handle splat
             if ($key === '*') {
                 foreach ($data as $splatIndex => $value) {
@@ -58,12 +58,12 @@ trait ConvertPublicId
                     }
 
                     if (is_array($value)) {
-                        $data[$splatIndex] = $this->convertPublicId($value, $modelClass);
+                        $data[$splatIndex] = $this->convertPublicId($value, $mapping);
 
                         continue;
                     }
 
-                    if ($model = $this->resolvePublicId($modelClass, $splatIndex, $value, $data)) {
+                    if ($model = $this->resolvePublicId($data, $mapping, $splatIndex, $value)) {
                         $data[$splatIndex] = $model->id;
                     }
                 }
@@ -76,13 +76,13 @@ trait ConvertPublicId
                 continue;
             }
 
-            if (is_array($modelClass)) {
-                $data[$key] = $this->convertPublicId($data[$key], $modelClass);
+            if (is_array($mapping)) {
+                $data[$key] = $this->convertPublicId($data[$key], $mapping);
 
                 continue;
             }
 
-            if ($model = $this->resolvePublicId($modelClass, $key, $value, $data)) {
+            if ($model = $this->resolvePublicId($data, $mapping, $key, $value)) {
                 $data[$key] = $model->id;
             }
         }
@@ -90,7 +90,7 @@ trait ConvertPublicId
         return $data;
     }
 
-    private function undot(array $input): array
+    private function expand(array $input): array
     {
         $output = [];
         foreach ($input as $key => $value) {
