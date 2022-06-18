@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use YieldStudio\EloquentPublicId\NotFoundModel;
-use YieldStudio\EloquentPublicId\Test\Models\Category;
-use YieldStudio\EloquentPublicId\Test\Models\Media;
-use YieldStudio\EloquentPublicId\Test\Models\Post;
-use YieldStudio\EloquentPublicId\Test\Models\Tag;
-use YieldStudio\EloquentPublicId\Test\Models\User;
+use YieldStudio\EloquentPublicId\Tests\Models\Category;
+use YieldStudio\EloquentPublicId\Tests\Models\Media;
+use YieldStudio\EloquentPublicId\Tests\Models\Post;
+use YieldStudio\EloquentPublicId\Tests\Models\Tag;
+use YieldStudio\EloquentPublicId\Tests\Models\User;
 use YieldStudio\EloquentPublicId\ConvertPublicId;
 
 class RequestTest

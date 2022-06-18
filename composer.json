@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "YieldStudio\\EloquentPublicId\\Test\\": "tests"
+            "YieldStudio\\EloquentPublicId\\Tests\\": "tests"
         }
     },
     "scripts": {

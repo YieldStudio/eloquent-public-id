@@ -1,6 +1,6 @@
 <?php
 
-namespace YieldStudio\EloquentPublicId\Test;
+namespace YieldStudio\EloquentPublicId\Tests;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Schema;

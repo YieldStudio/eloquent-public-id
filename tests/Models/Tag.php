@@ -1,6 +1,6 @@
 <?php
 
-namespace YieldStudio\EloquentPublicId\Test\Models;
+namespace YieldStudio\EloquentPublicId\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YieldStudio\EloquentPublicId\HasPublicId;

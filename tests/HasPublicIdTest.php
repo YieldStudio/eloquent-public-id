@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use YieldStudio\EloquentPublicId\HasPublicId;
-use YieldStudio\EloquentPublicId\Test\Models\Category;
-use YieldStudio\EloquentPublicId\Test\Models\Media;
+use YieldStudio\EloquentPublicId\Tests\Models\Category;
+use YieldStudio\EloquentPublicId\Tests\Models\Media;
 
 test('automatically assign a public id on creation', function () {
     $category = Category::create();
