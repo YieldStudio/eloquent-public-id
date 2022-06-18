@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace YieldStudio\EloquentPublicId;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +19,7 @@ trait HasPublicId
         });
     }
 
-    public static function findByPublicId(string $publicId, array $columns = ['*']): ?self
+    public static function findByPublicId(string $publicId, array $columns = ['*']): ?static
     {
         return static::query()->select($columns)->where((new static())->getPublicIdName(), $publicId)->first();
     }

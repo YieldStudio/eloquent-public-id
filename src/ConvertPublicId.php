@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace YieldStudio\EloquentPublicId;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -32,11 +34,11 @@ trait ConvertPublicId
         }
 
         // If the Morph relationship type not matching with a class name, check in Morph map
-        if (! class_exists($mapping)) {
+        if ($mapping && ! class_exists($mapping)) {
             $mapping = Relation::getMorphedModel($mapping);
         }
 
-        if (! class_exists($mapping)) {
+        if (!$mapping || ! class_exists($mapping)) {
             throw new NotFoundModel($key, $mapping);
         }
 
@@ -63,7 +65,7 @@ trait ConvertPublicId
                         continue;
                     }
 
-                    if ($model = $this->resolvePublicId($data, $mapping, $splatIndex, $value)) {
+                    if ($model = $this->resolvePublicId($data, $mapping, (string) $splatIndex, $value)) {
                         $data[$splatIndex] = $model->id;
                     }
                 }
