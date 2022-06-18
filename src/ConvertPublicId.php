@@ -38,7 +38,7 @@ trait ConvertPublicId
             $mapping = Relation::getMorphedModel($mapping);
         }
 
-        if (!$mapping || ! class_exists($mapping)) {
+        if (! $mapping || ! class_exists($mapping)) {
             throw new NotFoundModel($key, $mapping);
         }
 
