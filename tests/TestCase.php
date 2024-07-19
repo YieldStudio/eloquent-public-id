@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace YieldStudio\EloquentPublicId\Tests;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -39,16 +41,17 @@ abstract class TestCase extends Orchestra
 
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index()->unique();
+            $table->uuid()->index()->unique();
         });
     }
 
     /**
      * Define environment setup.
-     * @param Application $app
+     *
+     * @param  Application  $app
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [

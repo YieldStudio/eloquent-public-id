@@ -1,38 +1,48 @@
-# eloquent-public-id
-
-Eloquent Public ID Trait for Laravel 9 and above.
+# Eloquent Public Id
 
 [![Latest Version](https://img.shields.io/github/release/yieldstudio/eloquent-public-id?style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/releases)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yieldstudio/eloquent-public-id/tests?style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/actions/workflows/tests.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yieldstudio/eloquent-public-id/tests.yml?branch=main&style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/actions/workflows/tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/yieldstudio/eloquent-public-id?style=flat-square)](https://packagist.org/packages/yieldstudio/eloquent-public-id)
 
-This package offers two features:
-
-- one for the models allowing to manage a public ID
-- one for Form Request allowing to convert public IDs to IDs
+## What It Does
 
 The interest of public IDs is to keep a whole and incremental ID, while having a UUID to expose to the front end, which can be convenient for security reasons.
 
+This package offers two features:
+
+- Allow models to manage a public ID
+- Allow FormRequest to convert public IDs to IDs
+
 ## Installation
 
-	composer require yieldstudio/eloquent-public-id
+You can install the package via composer:
 
-## HasPublicId trait
+```bash
+composer require yieldstudio/eloquent-public-id
+```
 
-#### Add a public id field into your table
+## HasPublicId Trait
+
+This Trait will enable your Model to have benefit of all the actions needed to process the public id.
+
+Once package installed, Add a public id field into your table
 
 ```php
-Schema::create('orders', function (Blueprint $table) {
+Schema::create('users', function (Blueprint $table) {
     // ..
-    $table->uuid('id')->index()->unique();
+    $table->uuid('public_id')->index()->unique();
     // ..
 });
 ```
 
-#### Use the HasPublicId trait into your models
+Next step, use the HasPublicId trait into your Model
 
 ```php
 <?php
+
+declare(strict_types=1);
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use YieldStudio\EloquentPublicId\HasPublicId;
@@ -45,9 +55,9 @@ class User extends Model
 
 It's ready to work :)
 
-⚠️ By default the trait will mark the ID field as an hidden field and guard the public ID.
+> ⚠️ By default the trait will mark the ID field as a hidden field and guard the public ID.
 
-The trait adds some methods to your Model, here they are:
+The Trait adds some methods to your Model, here they are:
 
 | Name                                                     | Description                                           |
 |----------------------------------------------------------|-------------------------------------------------------|
@@ -58,8 +68,17 @@ The trait adds some methods to your Model, here they are:
 
 ### Change the name of the public ID column
 
+If in your migration you have chosen another field name instead of public_id, you have to specify this field using the `getPublicIdName` function.
+
 ```php
 <?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use YieldStudio\EloquentPublicId\HasPublicId;
 
 class User extends Model
 {
@@ -74,8 +93,19 @@ class User extends Model
 
 ### Change the generation of the public ID
 
+The public id is automatically generated once your Model is created in the database.
+If you want to modify the value of the generation of this field, you must add the `generatePublicId` function to your Model
+
 ```php
 <?php
+
+declare(strict_types=1);
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use YieldStudio\EloquentPublicId\HasPublicId;
 
 class User extends Model
 {
@@ -88,17 +118,21 @@ class User extends Model
 }
 ```
 
-## ConvertPublicId trait
+## ConvertPublicId Trait
 
-Allowing to convert public IDs to IDs in a Form Request (before validation).
+Allowing to convert public IDs to IDs in a FormRequest (before validation).
 
 ```php
 <?php
 
+declare(strict_types=1);
+
+namespace App\Http\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 use YieldStudio\EloquentPublicId\ConvertPublicId;
 
-class RequestTest extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     use ConvertPublicId;
 
@@ -119,6 +153,12 @@ class RequestTest extends FormRequest
 ## Unit tests
 
 To run the tests, just run `composer install` and `composer test`.
+
+## Contact us
+
+[<img src="https://github.com/user-attachments/assets/da9a38b2-fb3c-4581-957a-d3b520e32128" width="419px" />](https://www.yieldstudio.fr/contact)
+
+Our team at Yield Studio is ready to welcome you and make every interaction an exceptional experience. You can [contact us](https://www.yieldstudio.fr/contact).
 
 ## Changelog
 

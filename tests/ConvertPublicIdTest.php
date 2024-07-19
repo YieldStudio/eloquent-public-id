@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Relations\Relation;
-use YieldStudio\EloquentPublicId\NotFoundModel;
+use YieldStudio\EloquentPublicId\ConvertPublicId;
+use YieldStudio\EloquentPublicId\Exceptions\NotFoundModel;
 use YieldStudio\EloquentPublicId\Tests\Models\Category;
 use YieldStudio\EloquentPublicId\Tests\Models\Media;
 use YieldStudio\EloquentPublicId\Tests\Models\Post;
 use YieldStudio\EloquentPublicId\Tests\Models\Tag;
 use YieldStudio\EloquentPublicId\Tests\Models\User;
-use YieldStudio\EloquentPublicId\ConvertPublicId;
 
 class RequestTest
 {
@@ -22,24 +24,24 @@ class RequestTest
                 'post_id' => Post::class,
                 'tags.*' => Tag::class,
                 'postable_id' => 'postable_type',
-            ]
+            ],
         ],
         'media_id' => Media::class,
-        'checked_id' => 'App\\Models\\Checker' // Not existing model
+        'checked_id' => 'App\\Models\\Checker', // Not existing model
     ];
 
     /*
      * Fake Request methods
      */
 
-    public function __construct(public array $data){}
+    public function __construct(public array $data) {}
 
-    public function all()
+    public function all(): array
     {
         return $this->data;
     }
 
-    public function merge(array $data)
+    public function merge(array $data): void
     {
         $this->data = array_merge($this->data, $data);
     }
@@ -58,10 +60,10 @@ test('convert public ids to ids', function () {
             $tag2->getPublicId(),
             $tag1->getPublicId(),
             $tag3->getPublicId(),
-            'missing'
+            'missing',
         ],
         'postable_type' => User::class,
-        'postable_id' => $user->public_id
+        'postable_id' => $user->public_id,
     ]);
 
     $result->prepareForValidation();
@@ -75,12 +77,12 @@ test('convert public ids to ids with morph map', function () {
     $user = User::create();
 
     Relation::enforceMorphMap([
-        'an_user' => User::class
+        'an_user' => User::class,
     ]);
 
     $result = new RequestTest([
         'postable_type' => 'an_user',
-        'postable_id' => $user->public_id
+        'postable_id' => $user->public_id,
     ]);
 
     $result->prepareForValidation();
@@ -114,7 +116,7 @@ test('convert public ids with nesting', function () {
             $tag2->getPublicId(),
             $tag1->getPublicId(),
             $tag3->getPublicId(),
-            'missing'
+            'missing',
         ],
         'postable_type' => User::class,
         'postable_id' => $user->public_id,
@@ -126,17 +128,17 @@ test('convert public ids with nesting', function () {
                     $tag1->getPublicId(),
                 ],
                 'postable_type' => User::class,
-                'postable_id' => $user->public_id
+                'postable_id' => $user->public_id,
             ],
             [
                 'tags' => [
                     $tag2->getPublicId(),
-                    'missing'
+                    'missing',
                 ],
                 'postable_type' => null,
-                'postable_id' => ''
-            ]
-        ]
+                'postable_id' => '',
+            ],
+        ],
     ]);
 
     $result->prepareForValidation();
@@ -145,28 +147,27 @@ test('convert public ids with nesting', function () {
         ->tags->toBe([2, 1, 3, 'missing'])
         ->postable_id->toBe(1)
         ->suggestions->toBe([
-           [
-               'tags' => [2, 1],
-               'postable_type' => User::class,
-               'postable_id' => 1
-           ],
-           [
-               'tags' => [2, 'missing'],
-               'postable_type' => null,
-               'postable_id' => ''
-           ]
+            [
+                'tags' => [2, 1],
+                'postable_type' => User::class,
+                'postable_id' => 1,
+            ],
+            [
+                'tags' => [2, 'missing'],
+                'postable_type' => null,
+                'postable_id' => '',
+            ],
         ]);
 });
 
 test('convert public ids to ids with not found morph throws an NotFoundModel exception', function ($type) {
     $result = new RequestTest([
         'postable_type' => $type,
-        'postable_id' => 'an-uuid'
+        'postable_id' => 'an-uuid',
     ]);
 
     $result->prepareForValidation();
 })->with(['not-found-model', 'App\\Models\\DummyModel'])->throws(NotFoundModel::class);
-
 
 test('convert public ids to ids with not found model throws an NotFoundModel exception', function () {
     $result = new RequestTest([

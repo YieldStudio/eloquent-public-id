@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace YieldStudio\EloquentPublicId;
+namespace YieldStudio\EloquentPublicId\Exceptions;
 
 use Exception;
 
-class NotFoundModel extends Exception
+final class NotFoundModel extends Exception
 {
     public function __construct($key, $modelClass)
     {

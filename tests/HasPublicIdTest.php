@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -48,7 +50,8 @@ test('can customize the public id generate method', function () {
         $table->uuid('public_id')->index()->unique();
     });
 
-    class Product extends Model {
+    class Product extends Model
+    {
         use HasPublicId;
 
         public $timestamps = false;
