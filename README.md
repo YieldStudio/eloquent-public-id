@@ -1,7 +1,7 @@
 # Eloquent Public Id
 
 [![Latest Version](https://img.shields.io/github/release/yieldstudio/eloquent-public-id?style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/releases)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yieldstudio/eloquent-public-id/tests.yml?branch=main&style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/actions/workflows/tests.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/yieldstudio/eloquent-public-id/tests.yml?branch=main&style=flat-square)](https://github.com/yieldstudio/eloquent-public-id/actions/workflows/tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/yieldstudio/eloquent-public-id?style=flat-square)](https://packagist.org/packages/yieldstudio/eloquent-public-id)
 
 ## What It Does
@@ -11,7 +11,7 @@ The interest of public IDs is to keep a whole and incremental ID, while having a
 This package offers two features:
 
 - Allow models to manage a public ID
-- Allow FormRequest to convert public IDs to IDs
+- Allow FormRequest to easily convert public IDs to IDs
 
 ## Installation
 
@@ -156,7 +156,7 @@ To run the tests, just run `composer install` and `composer test`.
 
 ## Contact us
 
-[<img src="https://github.com/user-attachments/assets/da9a38b2-fb3c-4581-957a-d3b520e32128" width="419px" />](https://www.yieldstudio.fr/contact)
+[<img src="https://github.com/YieldStudio/.github/blob/main/assets/banner.png" width="419px" />](https://www.yieldstudio.fr/contact)
 
 Our team at Yield Studio is ready to welcome you and make every interaction an exceptional experience. You can [contact us](https://www.yieldstudio.fr/contact).
 

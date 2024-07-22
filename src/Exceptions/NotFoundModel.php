@@ -6,7 +6,7 @@ namespace YieldStudio\EloquentPublicId\Exceptions;
 
 use Exception;
 
-final class NotFoundModel extends Exception
+class NotFoundModel extends Exception
 {
     public function __construct($key, $modelClass)
     {
