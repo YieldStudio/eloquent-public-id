@@ -6,12 +6,13 @@ namespace YieldStudio\EloquentPublicId;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
+use YieldStudio\EloquentPublicId\Exceptions\NotFoundModel;
 
 trait ConvertPublicId
 {
-    public function prepareForValidation()
+    public function prepareForValidation(): void
     {
-        if ((bool) class_parents($this)) {
+        if (class_parents($this)) {
             parent::prepareForValidation();
         }
 

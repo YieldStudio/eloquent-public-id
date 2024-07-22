@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 trait HasPublicId
 {
-    public static function bootHasPublicId()
+    public static function bootHasPublicId(): void
     {
         static::creating(function (Model $model) {
             if (! $model->getPublicId()) {
@@ -24,7 +24,7 @@ trait HasPublicId
         return static::query()->select($columns)->where((new static())->getPublicIdName(), $publicId)->first();
     }
 
-    public function scopeWherePublicId($query, string $publicId): Builder
+    public function scopeWherePublicId(Builder $query, string $publicId): Builder
     {
         return $query->where($this->getPublicIdName(), $publicId);
     }
