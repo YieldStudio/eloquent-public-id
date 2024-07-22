@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YieldStudio\EloquentPublicId\Exceptions;
+namespace YieldStudio\EloquentPublicId;
 
 use Exception;
 
