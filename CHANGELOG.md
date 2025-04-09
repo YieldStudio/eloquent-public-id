@@ -4,6 +4,14 @@ All notable changes to `eloquent-public-id` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## 1.0.5 - 2025-04-09
+
+### What's Changed
+
+* chore: resolve github actions issue by @dtangdev in https://github.com/YieldStudio/eloquent-public-id/pull/6
+
+**Full Changelog**: https://github.com/YieldStudio/eloquent-public-id/compare/1.0.4...1.0.5
+
 ## 1.0.4 - 2025-04-09
 
 ### What's Changed
