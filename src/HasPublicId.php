@@ -21,7 +21,7 @@ trait HasPublicId
 
     public static function findByPublicId(string $publicId, array $columns = ['*']): ?static
     {
-        return static::query()->select($columns)->where((new static())->getPublicIdName(), $publicId)->first();
+        return static::query()->select($columns)->where((new static)->getPublicIdName(), $publicId)->first();
     }
 
     public function scopeWherePublicId(Builder $query, string $publicId): Builder
